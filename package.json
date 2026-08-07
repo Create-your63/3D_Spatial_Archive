@@ -4,11 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate:supersplat": "node scripts/generate-supersplat-viewer.mjs",
+    "predev": "npm run generate:supersplat",
     "dev": "vite",
+    "prebuild": "npm run generate:supersplat",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@playcanvas/supersplat-viewer": "1.28.0",
     "lucide-react": "^1.29.0",
     "maplibre-gl": "^6.2.0",
     "react": "19.2.6",

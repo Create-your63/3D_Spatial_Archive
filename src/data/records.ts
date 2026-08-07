@@ -1,13 +1,12 @@
+import type { SpatialAssetId } from "../viewer/types";
+
 export type RecordStatus = "existing" | "changed" | "demolished";
 
-export type SpatialAssetFormat = "ply" | "sog" | "streamed-sog";
-
-export type SpatialAssetDescriptor = {
-  format: SpatialAssetFormat;
-  source:
-    | { type: "remote"; url: string }
-    | { type: "local"; suggestedFileName?: string };
-};
+export type {
+  SpatialAssetDescriptor,
+  SpatialAssetFormat,
+  SpatialAssetSource,
+} from "../viewer/types";
 
 export type SpatialRecord = {
   id: string;
@@ -26,7 +25,7 @@ export type SpatialRecord = {
   method: string[];
   description: string;
   note: string;
-  asset?: SpatialAssetDescriptor;
+  assetId?: SpatialAssetId;
   vr: boolean;
 };
 
@@ -37,7 +36,8 @@ export const records: SpatialRecord[] = [
     date: "2026.07.04", year: "2026", status: "changed", statusLabel: "변화 중",
     equipment: "Raven Max", method: ["LiDAR", "Gaussian Splatting"],
     description: "재개발 경계에 놓인 낮은 주택과 경사진 골목. 오후 빛이 벽과 담 사이를 지나가는 순간을 기록했다.",
-    note: "골목 남측의 일부 건물은 기록 이후 철거 준비가 시작되었다.", vr: true,
+    note: "골목 남측의 일부 건물은 기록 이후 철거 준비가 시작되었다.",
+    assetId: "bogwang-001-splat", vr: true,
   },
   {
     id: "euljiro-002", number: "002", title: "을지로 인쇄골목", titleEn: "EULJIRO PRINT ALLEY",

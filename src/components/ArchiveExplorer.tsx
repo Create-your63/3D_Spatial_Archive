@@ -29,7 +29,35 @@ export default function ArchiveExplorer() {
     if (!mapContainer.current || mapRef.current) return;
     const map = new MapLibreMap({
       container: mapContainer.current,
-      style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+      style: {
+        version: 8,
+        sources: {
+          "carto-dark": {
+            type: "raster",
+            tiles: [
+              "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+              "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+              "https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+              "https://d.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+            ],
+            tileSize: 256,
+            maxzoom: 20,
+            attribution: "&copy; CARTO, &copy; OpenStreetMap contributors",
+          },
+        },
+        layers: [
+          {
+            id: "carto-dark",
+            type: "raster",
+            source: "carto-dark",
+            paint: {
+              "raster-opacity": 0.96,
+              "raster-saturation": -0.18,
+              "raster-contrast": 0.05,
+            },
+          },
+        ],
+      },
       center: [126.9708, 37.5476],
       zoom: 11.2,
       minZoom: 6,
