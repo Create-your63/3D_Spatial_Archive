@@ -1,33 +1,52 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
+# Dependencies
+/node_modules/
 /.pnp
 .pnp.*
+.pnpm-store/
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
+!.yarn/sdks
 !.yarn/versions
 
-# testing
-/coverage
-
-# vite
+# Vite and TypeScript outputs
 /dist/
+/.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+*.tsbuildinfo
 
-# misc
-.DS_Store
-*.pem
+# Tests and diagnostics
+/coverage/
+.nyc_output/
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# debug
+# Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Environment files
+.env
+.env.*
+!.env.example
 
+# Tool caches
+.npm/
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# Local workspace output
 /outputs/
 /work/
+
+# OS and credentials
+.DS_Store
+*.pem
