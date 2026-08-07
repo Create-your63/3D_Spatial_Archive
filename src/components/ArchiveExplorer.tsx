@@ -60,10 +60,18 @@ export default function ArchiveExplorer() {
       },
       center: [126.9708, 37.5476],
       zoom: 11.2,
+      bearing: 0,
+      pitch: 0,
       minZoom: 6,
+      maxPitch: 0,
+      dragRotate: false,
+      touchPitch: false,
+      pitchWithRotate: false,
       attributionControl: false,
       cooperativeGestures: true,
     });
+    map.touchZoomRotate.disableRotation();
+    map.keyboard.disableRotation();
     map.addControl(new NavigationControl({ showCompass: false }), "bottom-right");
     map.addControl(new AttributionControl({ compact: true }), "bottom-right");
     mapRef.current = map;
@@ -75,12 +83,15 @@ export default function ArchiveExplorer() {
     if (!map) return;
     markersRef.current.forEach((marker) => marker.remove());
     markersRef.current = filtered.map((record) => {
+      const anchor = document.createElement("div");
+      anchor.className = `archive-marker-anchor${selected.id === record.id ? " is-active" : ""}`;
       const element = document.createElement("button");
       element.className = `archive-marker status-${record.status}${selected.id === record.id ? " is-active" : ""}`;
       element.setAttribute("aria-label", `${record.title} 기록 선택`);
       element.innerHTML = `<span>${record.number}</span>`;
       element.addEventListener("click", () => selectRecord(record));
-      return new Marker({ element, anchor: "center" })
+      anchor.appendChild(element);
+      return new Marker({ element: anchor, anchor: "center" })
         .setLngLat([record.lng, record.lat]).addTo(map);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,11 +99,23 @@ export default function ArchiveExplorer() {
 
   function selectRecord(record: SpatialRecord) {
     setSelected(record);
-    mapRef.current?.flyTo({ center: [record.lng, record.lat], zoom: record.id === "buyeo-006" ? 12.5 : 14.2, duration: 1100 });
+    mapRef.current?.flyTo({
+      center: [record.lng, record.lat],
+      zoom: record.id === "buyeo-006" ? 12.5 : 14.2,
+      bearing: 0,
+      pitch: 0,
+      duration: 1100,
+    });
   }
 
   function resetMap() {
-    mapRef.current?.flyTo({ center: [126.9708, 37.5476], zoom: 11.2, duration: 900 });
+    mapRef.current?.flyTo({
+      center: [126.9708, 37.5476],
+      zoom: 11.2,
+      bearing: 0,
+      pitch: 0,
+      duration: 900,
+    });
   }
 
   return (
